@@ -3,6 +3,9 @@ package dictjava.tests;
 import org.junit.*;
 import org.junit.runner.JUnitCore;
 import static org.junit.Assert.*;
+
+import java.beans.Transient;
+
 import source.dict;
 
 public class testDictOneItem {
@@ -12,7 +15,7 @@ public class testDictOneItem {
     public void init() {
         dict = new dict();
         //añadir elemento
-        dict.add();
+        dict.add(0, 1);
     }
 
     /**
@@ -35,6 +38,15 @@ public class testDictOneItem {
     }
 
     /**
+     * Prueba de conseguir el valor dada una clave en un diccionario de un elemento
+     */
+    @Test
+    public void testGet(){
+        int valor = dict.get(0);
+        assertEquals("El valor debe ser 1", 1, valor);
+    }
+
+    /**
      * Prueba de eliminar un valor a un diccionario de un elemento
      */
     @Test
@@ -43,4 +55,6 @@ public class testDictOneItem {
         int dictlen = dict.len();
         assertEquals("El tamaño debe ser 0", 0, dictLen);
     }
+
+    
 }

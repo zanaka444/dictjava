@@ -34,10 +34,20 @@ public class testDictEmpty {
     }
 
     /**
+     * Prueba de conseguir el valor dada una clave en un diccionario vacío
+     */
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testGet(){
+        int valor = dict.get();
+    }
+    
+    /**
      * Prueba de eliminar un valor a un diccionario vacío
      */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testRemove(){
         dict.remove();
     }
+
+    
 }
