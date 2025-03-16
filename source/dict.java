@@ -3,13 +3,13 @@ package dictjava.source;
 import java.util.Arrays;
 import java.util.Objects;
 
-class Dictionary{
+public class dict{
 
     private Node[] diccionario;
     private static int size = 10;
     private int contador = 0;
 
-    public Dictionary(){
+    public dict(){
         this.diccionario = new Node[size];
     }
 
