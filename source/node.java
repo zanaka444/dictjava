@@ -1,5 +1,14 @@
 package dictjava.source;
 
-public class node {
-    
+class Node{
+
+    public final Object key;
+    public Object value;
+
+    public Node(Object key, Object value) {
+        this.key = key;
+        this.value = value;
+    }
 }
+
+
