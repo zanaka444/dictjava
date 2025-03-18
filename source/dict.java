@@ -13,7 +13,7 @@ public class dict{
         this.diccionario = new Node[size];
     }
 
-    public void insertar(Object key, Object value, int posicion){
+    public void add(Object key, Object value, int posicion){
         if(contador >= (diccionario.length * 0.8)){
             agrandar();
         }
@@ -26,7 +26,7 @@ public class dict{
         }
     }
 
-    public void eliminar(Object key){
+    public void remove(Object key){
         for(int i = 0; i < size; i++){
             if(diccionario[i] != null && diccionario[i].key == key){
                 diccionario[i] = null;
@@ -35,7 +35,7 @@ public class dict{
         }
     }
 
-    public Object obtener(Object key){
+    public Object get(Object key){
         for(int i = 0; i < size; i++){
             if(diccionario[i] != null && diccionario[i].key == key){
                 return diccionario[i].value;
@@ -44,7 +44,7 @@ public class dict{
         return null ;
     }
 
-    public boolean contiene(Object key){
+    public boolean contains(Object key){
         return obtener(key) != null;
     }
 
@@ -52,6 +52,21 @@ public class dict{
         diccionario = new Node[size * 2];
     }
 
+    /**
+    * Devuelve el tamaño del diccionario
+    * referencia: https://www.w3schools.com/python/python_ref_dictionary.asp
+    */
+    public int len(){}
+
+    /**
+    * Devuelve array de las claves del diccionario
+    */
+    public Collections keys(){}
+
+    /**
+    * Devuelve array de los valores del diccionario
+    */
+    public Collections values(){}
 
     /**
 
