@@ -54,19 +54,39 @@ public class dict{
 
     /**
     * Devuelve el tamaño del diccionario
-    * referencia: https://www.w3schools.com/python/python_ref_dictionary.asp
+    * referencia metodos: https://www.w3schools.com/python/python_ref_dictionary.asp
     */
-    public int len(){}
+    public int len(){
+        return diccionario.length;
+    }
 
     /**
     * Devuelve array de las claves del diccionario
     */
-    public Collections keys(){}
+    public Object[] keys(){
+        Object[] keys = new Object[size];
+
+        for(int i = 0; i < size; i++){
+            if(diccionario[i] != null){
+                keys[i] = diccionario[i].key;
+            }
+        }
+        return keys;
+    }
 
     /**
     * Devuelve array de los valores del diccionario
     */
-    public Collections values(){}
+    public Object[] values(){
+        Object[] values = new Object[size];
+
+        for(int i = 0; i < size; i++){
+            if(diccionario[i] != null){
+                values[i] = diccionario[i].value;
+            }
+        }
+        return values;
+    }
 
     /**
 
