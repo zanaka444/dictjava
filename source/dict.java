@@ -1,6 +1,7 @@
 package dictjava.source;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class dict{
@@ -88,6 +89,45 @@ public class dict{
         return values;
     }
 
+    public Node[] sorted() {
+        // Extraemos los elementos no nulos
+        // https://www.baeldung.com/java-util-arrays
+        // https://www.geeksforgeeks.org/stream-toarray-java-examples/
+        Node[] validElements = Arrays.stream(diccionario)
+                .filter(Objects::nonNull)
+                .toArray(Node[]::new);
+
+        // Ordenar por clave
+        // https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html
+        // https://www.geeksforgeeks.org/comparator-interface-java/
+        Arrays.sort(validElements, Comparator.comparing(n -> (Comparable) n.key));
+
+        return validElements;
+    }
+
+    /**
+     * Método que devuelve true si ningun valor es null, false o 0
+     */
+
+    // https://www.w3schools.com/python/ref_func_all.asp
+    // https://www.geeksforgeeks.org/python-all-function/
+    // https://realpython.com/python-dicts/
+    public boolean all() {
+        for (Node node: diccionario) {
+            if (node != null && !isTruthy(node.value)) {
+                return false; // Si encontramos un valor que no es truthy, retornamos false
+            }
+        }
+        return true; // si todos los valores son truthy, retornamos true
+    }
+
+    private boolean isTruthy(Object value) {
+        if (value == null) return false;
+        if (value instanceof Boolean) return (Boolean) value;
+        if (value instanceof Number) return ((Number) value).doubleValue() != 0;
+        if (value instanceof String) return !((String) value).isEmpty();
+        return true;
+    }
     /**
 
      public int hash1(int key){
