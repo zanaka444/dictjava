@@ -1,4 +1,4 @@
-package dictjava.source;
+package edp;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -14,18 +14,34 @@ public class dict{
         this.diccionario = new Node[size];
     }
 
-    public void add(Object key, Object value, int posicion){
-        if(contador >= (diccionario.length * 0.8)){
+    public void add(Object key, Object value){
+        if(contador >= (len() * 0.8)){
+            System.out.println("La tabla esta casi llena vamos a agrandarla\n");
             agrandar();
+            contador = 0;
         }
 
-        if(diccionario[posicion] != null){
+        int posicion = hash1(key);
+
+        if(diccionario[posicion] == null){
             diccionario[posicion] = new Node(key, value);
             contador++;
+            System.out.println("Pareja introducida en la posición " + posicion);
         }else{
-            //hacer lo de las colisiones
+            System.out.println("Se produce colisión en la posición " + posicion);
+            int avanzar = hash2(key);
+            while(true){
+                posicion = (posicion + avanzar) % len();
+                if(diccionario[posicion] == null){
+                    diccionario[posicion] = new Node(key, value);
+                    contador++;
+                    System.out.println("Posición final " + posicion);
+                    break;
+                }
+            }
         }
     }
+
 
     public void remove(Object key){
         for(int i = 0; i < size; i++){
@@ -42,28 +58,40 @@ public class dict{
                 return diccionario[i].value;
             }
         }
-        return null ;
+        return null;
     }
 
     public boolean contains(Object key){
-        return obtener(key) != null;
+        return get(key) != null;
     }
 
-    public void agrandar(){
-        diccionario = new Node[size * 2];
+    public void agrandar() {
+        Node[] copia = diccionario;
+        size = size * 2;
+        diccionario = new Node[size];
+
+        System.out.println("Recolocando los objetos");
+        for (int i = 0; i < copia.length; i++) {
+            if (copia[i] != null) {
+                // Usar hash1 para obtener la nueva posición en la nueva tabla
+                Object key = copia[i].key;
+                Object value = copia[i].value;
+                add(key, value);
+            }
+        }
     }
 
     /**
-    * Devuelve el tamaño del diccionario
-    * referencia metodos: https://www.w3schools.com/python/python_ref_dictionary.asp
-    */
+     * Devuelve el tamaño del diccionario
+     * referencia metodos: https://www.w3schools.com/python/python_ref_dictionary.asp
+     */
     public int len(){
         return diccionario.length;
     }
 
     /**
-    * Devuelve array de las claves del diccionario
-    */
+     * Devuelve array de las claves del diccionario
+     */
     public Object[] keys(){
         Object[] keys = new Object[size];
 
@@ -76,8 +104,8 @@ public class dict{
     }
 
     /**
-    * Devuelve array de los valores del diccionario
-    */
+     * Devuelve array de los valores del diccionario
+     */
     public Object[] values(){
         Object[] values = new Object[size];
 
@@ -128,24 +156,32 @@ public class dict{
         if (value instanceof String) return !((String) value).isEmpty();
         return true;
     }
+
+
     /**
-
-     public int hash1(int key){
-     return Math.abs(key.hashCode()) % diccionario.length;
-     }
-
-     public int hash2(){
-     return 1;
-     }
-
+     * Método que devuelve una PseudoClave si el objeto es hasheable.
+     * @param key clave que queremos comprobar si es hasheable.
+     * @return un número entero positivo basado en el código hash de la clave.
      */
 
-    //H(x) = (x mod LTabla)
-
-    //Utilizar esto para sacar la pseudoclave, para luego utilizarla como la x en la siguiente formula -> //H(x) = (x mod LTabla)
-    // y asi saber la posicion en cual insertar el elemento
-    @Override
-    public int hashCode() {
-        return Objects.hash(Arrays.hashCode(diccionario), contador);
+    private int generarPseudoClave(Object key) {
+        return Math.abs(key.hashCode());
     }
+
+    /**
+     * Método que devuelve la posición en la cual vamos a introducir el elemento
+     * @param key clave del elemento que queremos insertar en la tabla hash.
+     * @return la posición en la cual vamos a introducir el elemento en el diccionario.
+     */
+
+    private int hash1(Object key){
+        int pseudoclave = generarPseudoClave(key);
+        return pseudoclave % len();
+    }
+
+    public int hash2(Object key){
+        int pseudoclave = generarPseudoClave(key);
+        return (pseudoclave % (len() - 1)) + 1;
+    }
+
 }
