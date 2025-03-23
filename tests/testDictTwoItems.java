@@ -3,7 +3,7 @@ package dictjava.tests;
 import org.junit.*;
 import org.junit.runner.JUnitCore;
 import static org.junit.Assert.*;
-import source.dict;
+import dictjava.source.dict;
 
 public class testDictTwoItems {
 

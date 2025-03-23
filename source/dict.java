@@ -1,4 +1,4 @@
-package edp;
+package dictjava.source;
 
 import java.util.Arrays;
 import java.util.Comparator;
