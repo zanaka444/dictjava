@@ -78,4 +78,72 @@ public class testDictManyItems {
         int dictLen = dict.len();
         assertEquals("Tamaño incorrecto", dataLen - 1, dictLen);
     }
+
+    /**
+     * Test del método all().
+     * Se espera que retorne true si todos los valores son "truthy" (no 0, no false, no null).
+     * Dado que los números distintos de 0 se consideran truthy, se comprueba según los datos insertados.
+     */
+    @Test
+    public void testAll() {
+        boolean allResult = dict.all();
+
+        // Verificamos si entre los datos existe algún 0, ya que 0 se considera falsy
+        boolean tieneCero = false;
+        for (Integer num : data) {
+            if (num == 0) {
+                tieneCero = true;
+                break;
+            }
+        }
+        if (tieneCero) {
+            assertFalse("all() debería retornar false si existe un 0", allResult);
+        } else {
+            assertTrue("all() debería retornar true si todos los valores son truthy", allResult);
+        }
+    }
+
+    /**
+     * Test del método contains().
+     */
+    @Test
+    public void testContains() {
+        // Verificamos que las claves insertadas existan
+        assertTrue("El diccionario debería contener 'clave0'", dict.contains("clave0"));
+        assertTrue("El diccionario debería contener 'clave5'", dict.contains("clave5"));
+        // Y que una clave que no se insertó retorne false
+        assertFalse("El diccionario no debería contener 'claveInexistente'", dict.contains("claveInexistente"));
+    }
+
+    /**
+     * Test del método keys().
+     */
+    @Test
+    public void testKeys() {
+        Object[] keys = dict.keys();
+        int count = 0;
+        // Contamos las claves no nulas
+        for (Object key : keys) {
+            if (key != null) {
+                count++;
+            }
+        }
+        assertEquals("El número de claves no coincide con los elementos insertados", data.length, count);
+    }
+
+    /**
+     * Test del método values().
+     */
+    @Test
+    public void testValues() {
+        Object[] values = dict.values();
+        int count = 0;
+        // Contamos los valores no nulos
+        for (Object value : values) {
+            if (value != null) {
+                count++;
+            }
+        }
+        assertEquals("El número de valores no coincide con los elementos insertados", data.length, count);
+    }
 }
