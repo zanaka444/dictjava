@@ -8,9 +8,9 @@ import source.dict;
 
 @RunWith(Suite.class)
 @SuiteClasses({ tests.testDictEmpty.class,
-//                tests.testDictManyItems.class, 
-//                tests.testDictOneItem.class, 
-//                tests.testDictTwoItems.class, 
+                tests.testDictManyItems.class, 
+                tests.testDictOneItem.class, 
+                tests.testDictTwoItems.class, 
           })
 
 

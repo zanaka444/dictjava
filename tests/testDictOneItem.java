@@ -14,8 +14,7 @@ public class testDictOneItem {
     @Before
     public void init() {
         dict = new dict();
-        //añadir elemento
-        dict.add(0, 1);
+        dict.add("0", 1);
     }
 
     /**
@@ -32,7 +31,7 @@ public class testDictOneItem {
      */
     @Test
     public void testAdd(){
-        dict.add();
+        dict.add("1", 2);
         int dictlen = dict.len();
         assertEquals("El tamaño debe ser 2", 2, dictLen);
     }
@@ -42,7 +41,7 @@ public class testDictOneItem {
      */
     @Test
     public void testGet(){
-        int valor = dict.get(0);
+        int valor = dict.get("0");
         assertEquals("El valor debe ser 1", 1, valor);
     }
 
@@ -51,9 +50,45 @@ public class testDictOneItem {
      */
     @Test
     public void testRemove(){
-        dict.remove();
+        dict.remove("0");
         int dictlen = dict.len();
         assertEquals("El tamaño debe ser 0", 0, dictLen);
+    }
+
+    /**
+     * Prueba de metodo contains con un diccionario de un elemento
+     */
+    @Test
+    public void testContains(){
+        boolean contains = dict.contains("0");
+        assertTrue("El diccionario contiene la clave", contains);
+    }
+
+    /**
+     * Prueba de obtener las claves de un diccionario de un elemento
+     */
+    @Test
+    public void testKeys(){
+        Object[] keys = dict.keys();
+        assertEquals("El array de claves debe ser de tamaño 1", 1, keys.length);
+    }
+
+    /**
+     * Prueba de obtener los valores de un diccionario de un elemento
+     */
+    @Test
+    public void testValues(){
+        Object[] values = dict.values();
+        assertEquals("El array de valores debe ser de tamaño 1", 1, values.length);
+    } 
+
+    /**
+     * Prueba del metodo all en un diccionario de un elemento
+     */
+    @Test 
+    public void testAll(){
+        boolean all = dict.all();
+        assertTrue("El diccionario no contiene elementos null", all);
     }
 
     
