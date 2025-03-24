@@ -158,6 +158,83 @@ public class dict{
     }
 
 
+    public Object max(){
+        Object mayor = null;
+        Object comparar = null;
+        int continuar = 0;
+        for(int i = 0; i < len(); i++){
+            if(diccionario[i] != null){
+                mayor = diccionario[i].value;
+                continuar = i + 1;
+                break;
+            }
+        }
+
+        if (mayor == null) return null;
+
+        for(int j = continuar; j < len(); j++){
+            if(diccionario[j] != null) {
+                comparar = diccionario[j].value;
+                mayor = Comparar(mayor, comparar) >= 0 ? mayor : comparar;
+            }
+        }
+        return mayor;
+    }
+
+
+    public Object min(){
+        Object menor = null;
+        Object comparar = null;
+        int continuar = 0;
+        for(int i = 0; i < len(); i++){
+            if(diccionario[i] != null){
+                menor = diccionario[i].value;
+                continuar = i + 1;
+                break;
+            }
+        }
+
+        if (menor == null) return null;
+
+
+        for(int j = continuar; j < len(); j++){
+            if(diccionario[j] != null) {
+                comparar = diccionario[j].value;
+                menor = Comparar(menor, comparar) <= 0 ? menor : comparar;
+            }
+        }
+        return menor;
+    }
+
+
+    private static int Comparar(Object actual, Object comparar){
+
+        if(actual instanceof Number && comparar instanceof Number){
+            double val1 = ((Number) actual).doubleValue();
+            double val2 = ((Number) comparar).doubleValue();
+            return Double.compare(val1, val2);
+        }
+
+        if (actual instanceof String && comparar instanceof String) {
+            return ((String) actual).compareTo((String) comparar);
+        }
+
+        if (actual instanceof Boolean && comparar instanceof Boolean) {
+            return Boolean.compare((Boolean) actual, (Boolean) comparar);
+        }
+        return DiferentesTipos(actual, comparar);
+    }
+
+    private static int DiferentesTipos(Object actual, Object comparar){
+
+        if (actual instanceof Number) return 1; // Si menor es número y comparar no, menor es "mayor"
+        if (comparar instanceof Number) return -1; // Si comparar es número y menor no, comparar es "mayor"
+        if (actual instanceof Boolean) return 1; // Booleanos son mayores que Strings
+        return -1;
+
+    }
+
+
     /**
      * Método que devuelve una PseudoClave si el objeto es hasheable.
      * @param key clave que queremos comprobar si es hasheable.
@@ -179,7 +256,7 @@ public class dict{
         return pseudoclave % len();
     }
 
-    public int hash2(Object key){
+    private int hash2(Object key){
         int pseudoclave = generarPseudoClave(key);
         return (pseudoclave % (len() - 1)) + 1;
     }
